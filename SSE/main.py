@@ -1,6 +1,6 @@
 import dearpygui.dearpygui as dpg
 from Login_UI import render_login_window
-from font import add_fonts
+from Visual_Registry import new_registry
 
 def main():
     dpg.create_context()
@@ -10,7 +10,7 @@ def main():
     
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()
-    add_fonts(h)
+    new_registry(h)
     
     render_login_window()
 

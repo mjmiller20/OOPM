@@ -24,50 +24,8 @@ def render_login_window():
         with dpg.theme_component(dpg.mvAll):
             dpg.add_theme_color(dpg.mvThemeCol_Text, (22, 12, 110))
 
-    #set theme for window
-    with dpg.theme(tag="__win_theme1"):
-        with dpg.theme_component(dpg.mvAll):
-            dpg.add_theme_color(dpg.mvThemeCol_WindowBg, (173, 216, 250))
-            dpg.add_theme_color(dpg.mvThemeCol_ChildBg, (173, 216, 250))
-                
-    with dpg.theme(tag="topWin_theme1"):
-        with dpg.theme_component(dpg.mvAll):
-            dpg.add_theme_color(dpg.mvThemeCol_WindowBg, (20, 75, 150))
-            dpg.add_theme_color(dpg.mvThemeCol_Button, (20, 75, 150))
-            dpg.add_theme_color(dpg.mvThemeCol_ButtonActive, (20, 75, 150))
-            dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, (20, 75, 150))
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (255,255,255))
-
-
-    with dpg.theme(tag="Login_button"):
-        with dpg.theme_component(dpg.mvButton):
-            dpg.add_theme_color(dpg.mvThemeCol_Button, (208,242,252))
-            dpg.add_theme_color(dpg.mvThemeCol_ButtonActive, (208,242,252))
-            dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, (188,222,242))
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (22, 12, 110))
-            dpg.add_theme_style(dpg.mvStyleVar_FrameRounding,5)
-
-    with dpg.theme(tag="new_user_button"):
-        with dpg.theme_component(dpg.mvButton):
-            dpg.add_theme_color(dpg.mvThemeCol_Button, (173, 216, 250))
-            dpg.add_theme_color(dpg.mvThemeCol_ButtonActive, (208,242,252))
-            dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, (173, 216, 250))
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (22, 12, 110))
-            dpg.add_theme_style(dpg.mvStyleVar_FrameRounding,5)
-
-    with dpg.theme(tag="input_text_theme"):
-        with dpg.theme_component(dpg.mvInputText):
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (22, 12, 110))
-            dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (255, 255, 255))
-
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()
-
-    with dpg.texture_registry():
-        width, height, channels, data=dpg.load_image("CarRentalLogo.png")
-        dpg.add_static_texture(width=width, height=height, default_value=data, tag="CarRentalLogo")
-        width, height, channels, data=dpg.load_image("ProfileLogo.png")
-        dpg.add_static_texture(width=width, height=height, default_value=data, tag="ProfileLogo")
         
     #create top bar
     with dpg.window(label="Car Rental System", no_close=True, no_collapse=True, no_resize=True, no_move=True) as loginWin:
@@ -112,8 +70,8 @@ def render_login_window():
         dpg.bind_item_theme(dpg.last_item(), "new_user_button")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-    dpg.bind_item_theme(loginWin, "__win_theme1")
-    dpg.bind_item_theme(topWin, "topWin_theme1")
+    dpg.bind_item_theme(loginWin, "__win_theme")
+    dpg.bind_item_theme(topWin, "topWin_theme")
 
     dpg.set_primary_window(loginWin, True)
 
