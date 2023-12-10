@@ -2,6 +2,8 @@
 import dbaccess
 
 class CarRental:
+    db = None
+
     def __init__(self):
         self.db = dbaccess.DBAccess()
 
@@ -52,3 +54,6 @@ class CarRental:
 
     def deleteClient(self, id):
         return self.db.deleteCustomer(id)
+
+    def getReservationsByClient(self, id):
+        return self.db.getReservationsByClient(id)

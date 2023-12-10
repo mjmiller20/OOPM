@@ -1,5 +1,5 @@
-import psycopg
-from psycopg import Error as psycopgError
+import psycopg2
+from psycopg2 import Error as psycopgError
 
 class DBAccess:
     conn = None
@@ -8,8 +8,13 @@ class DBAccess:
     def __init__(self):
         print("Connecting to PostgreSQL")
         try:
-            self.conn = psycopg.connect("dbname='projdb' user='postgres' host='ec2-54-237-205-175.compute-1.amazonaws.com' password='FSd0\\0*K<PTNEwhg^SUaM6&6' port='5433'")
-            #self.conn = psycopg2.connect(host="54.237.205.175", database="testdb", user="postgres", password="FSd0\\0*K<PTNEwhg^SUaM6&6")
+            self.conn = psycopg2.connect(
+                host="ls-49d6abcc0497d5fab44b0cc9d8a9b96ccb8d378b.coequzq2kddp.us-east-1.rds.amazonaws.com", 
+                database="projdb", 
+                user="projectadmin", 
+                password="FSd0\\\\0*K<PTNEwhg^SUaM6&6",
+                port="5432"
+                )
             self.cur = self.conn.cursor()
             print("Connected to PostgreSQL")
         except (Exception, psycopgError) as error:
@@ -26,19 +31,24 @@ class DBAccess:
         self.cur.execute("SELECT * FROM Customers;")
         result = self.cur.fetchall()
         return result
+
+    def getCustomerByEmail(self, email):
+        self.cur.execute("SELECT * FROM Customers WHERE email = %s;", (email,))
+        result = self.cur.fetchall()
+        return result
     
     def getCustomer(self, customerID):
         self.cur.execute("SELECT * FROM Customers WHERE customerID = %s;", (customerID,))
         result = self.cur.fetchall()
         return result
 
-    def addCustomer(self, customerID, firstName, lastName, email, phone):
-        self.cur.execute("INSERT INTO Customers (customerID, firstName, lastName, email, phone) VALUES (%s, %s, %s, %s, %s);", (customerID, firstName, lastName, email, phone))
+    def addCustomer(self, firstName, lastName, email, phone, pwhash):
+        self.cur.execute("INSERT INTO Customers (firstName, lastName, email, phone, pwhash) VALUES (%s, %s, %s, %s, %s);", (firstName, lastName, email, phone, pwhash))
         self.conn.commit()
         return True
 
-    def updateCustomer(self, customerID, firstName, lastName, email, phone):
-        self.cur.execute("UPDATE Customers SET firstName = %s, lastName = %s, email = %s, phone = %s WHERE customerID = %s;", (firstName, lastName, email, phone, customerID))
+    def updateCustomer(self, customerID, firstName, lastName, email, phone, pwhash):
+        self.cur.execute("UPDATE Customers SET firstName = %s, lastName = %s, email = %s, phone = %s, pwhash = %s WHERE customerID = %s;", (firstName, lastName, email, phone, customerID))
         self.conn.commit()
         return True
 
@@ -47,7 +57,7 @@ class DBAccess:
         self.conn.commit()
         return True
 
-    def getReservations(self, customerID):
+    def getReservations(self):
         self.cur.execute("SELECT * FROM Reservations;")
         result = self.cur.fetchall()
         return result
@@ -57,8 +67,13 @@ class DBAccess:
         result = self.cur.fetchall()
         return result
 
-    def addReservation(self, customerID, vehicleID, startDate, endDate):
-        self.cur.execute("INSERT INTO Reservations (customerID, vehicleID, startDate, endDate) VALUES (%s, %s, %s, %s);", (customerID, vehicleID, startDate, endDate))
+    def getReservationsByClient(self, customerID):
+        self.cur.execute("SELECT * FROM Reservations WHERE customerID = %s;", (customerID,))
+        result = self.cur.fetchall()
+        return result
+    
+    def addReservation(self, customerID, vehicleID, pickupLocation, dropoffLocation, timeOfPickup, startDate, endDate, invoiceAmount):
+        self.cur.execute("INSERT INTO Reservations (customerID, vehicleID, pickupLocation, dropoffLocation, timeOfPickup, startDate, endDate, invoiceAmount) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);", (customerID, vehicleID, pickupLocation, dropoffLocation, timeOfPickup, startDate, endDate, invoiceAmount,))
         self.conn.commit()
         return True
 
@@ -82,8 +97,8 @@ class DBAccess:
         result = self.cur.fetchall()
         return result
 
-    def addVehicle(self, vehicleID, make, model, year, color, mileage, price, status):
-        self.cur.execute("INSERT INTO Vehicles (vehicleID, make, model, year, color, mileage, price, status) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);", (vehicleID, make, model, year, color, mileage, price, status))
+    def addVehicle(self, make, model, year, color, mileage, price, priceClass, available, location):
+        self.cur.execute("INSERT INTO Vehicles (make, model, year, color, mileage, price, priceclass, available, location) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);", (make, model, year, color, mileage, price, priceClass, available, location))
         self.conn.commit()
         return True
 
@@ -92,7 +107,8 @@ class DBAccess:
         self.conn.commit()
         return True
 
-    def updateVehicle(self, vehicleID, make, model, year, color, mileage, price, status):
-        self.cur.execute("UPDATE Vehicles SET make = %s, model = %s, year = %s, color = %s, mileage = %s, price = %s, status = %s WHERE vehicleID = %s;", (make, model, year, color, mileage, price, status, vehicleID))
+    def updateVehicle(self, vehicleID, make, model, year, color, mileage, price, priceClass, available, location):
+        self.cur.execute("UPDATE Vehicles SET make = %s, model = %s, year = %s, color = %s, mileage = %s, price = %s, priceClass = %s, available = %s, location = %s WHERE vehicleID = %s;", (make, model, year, color, mileage, price, priceClass, available, location,  vehicleID))
         self.conn.commit()
         return True
+
