@@ -32,8 +32,8 @@ class DBAccess:
         result = self.cur.fetchall()
         return result
 
-    def getCustomerByEmail(self, email):
-        self.cur.execute("SELECT * FROM Customers WHERE email = %s;", (email,))
+    def getCustomerByEmailAndHash(self, email, pwhash):
+        self.cur.execute("SELECT * FROM Customers WHERE email = %s AND pwhash = %s;", (email, pwhash))
         result = self.cur.fetchall()
         return result
     
@@ -111,4 +111,3 @@ class DBAccess:
         self.cur.execute("UPDATE Vehicles SET make = %s, model = %s, year = %s, color = %s, mileage = %s, price = %s, priceClass = %s, available = %s, location = %s WHERE vehicleID = %s;", (make, model, year, color, mileage, price, priceClass, available, location,  vehicleID))
         self.conn.commit()
         return True
-
