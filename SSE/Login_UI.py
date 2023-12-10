@@ -13,59 +13,19 @@ def login_callback(sender, app_data, user_data):
 
     render_reservation_window()
 
+def new_user_callback(sender, app_data, user_data):
+    print("new_user")
 
 def render_login_window():
     global login_window
     global top_window
-    #set theme for text
-    with dpg.theme(tag="text_theme1"):
-        with dpg.theme_component(dpg.mvAll):
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (22, 12, 110))
 
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()
-
-    with dpg.window(label="New Account", modal=True, show=False, tag="modal_id", width = w*.9, height = h*.8, no_title_bar=True, pos=(w*.05,100), no_move=True) as new_account_win:
-
-        dpg.add_text("Create a New Account ", pos=(w*.34, h*.20))
-        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
-        dpg.bind_item_font(dpg.last_item(), "title_font")
-
-        dpg.add_text("Full Name: ", pos=(w*.05, h*.35))
-        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
-        dpg.bind_item_font(dpg.last_item(), "title_font")
-
-        dpg.add_input_text(tag="full_name_text", pos=(w*.2, h*.35), width=w*.65, height=h*.075)
-        dpg.bind_item_theme(dpg.last_item(), "input_text_theme")
-        dpg.bind_item_font(dpg.last_item(), "title_font")
-    
-        dpg.add_text("Username: ", pos=(w*.05, h*.45))
-        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
-        dpg.bind_item_font(dpg.last_item(), "title_font")
-
-        dpg.add_input_text(tag="new_Username_text", pos=(w*.2, h*.45), width=w*.65, height=h*.075)
-        dpg.bind_item_theme(dpg.last_item(), "input_text_theme")
-        dpg.bind_item_font(dpg.last_item(), "title_font")
-
-        dpg.add_text(" Password: ", pos=(w*.05, h*.55)) 
-        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
-        dpg.bind_item_font(dpg.last_item(), "title_font")
-
-        dpg.add_input_text(tag="new_Password_text", pos=(w*.2, h*.55), width=w*.65, height=h*.15, password=True)
-        dpg.bind_item_theme(dpg.last_item(), "input_text_theme")
-        dpg.bind_item_font(dpg.last_item(), "title_font")
-
-
-        with dpg.group(horizontal=True):
-            dpg.add_button(label="Create Account", width=w*.13, pos=(w*.32, h*.65), callback=lambda: dpg.configure_item("modal_id", show=False))
-            dpg.bind_item_theme(dpg.last_item(), "new_user_button")
-            dpg.bind_item_font(dpg.last_item(), "Res_font")
-            dpg.add_button(label="Cancel", width=w*.13, pos=(w*.48, h*.65), callback=lambda: dpg.configure_item("modal_id", show=False))
-            dpg.bind_item_theme(dpg.last_item(), "new_user_button")
-            dpg.bind_item_font(dpg.last_item(), "Res_font")
-
+        
     #create top bar
     with dpg.window(label="Car Rental System", no_close=True, no_collapse=True, no_resize=True, no_move=True) as loginWin:
+        dpg.bind_item_theme(loginWin, "__win_theme")
         with dpg.window(no_title_bar=True, no_close=True, no_collapse=True, no_resize=True, no_move=True, min_size=(0,0), width=w, height=h*.083, pos=(0,0)) as topWin:
             dpg.add_image_button(texture_tag="CarRentalLogo", label="Car Rental System", pos=(0,0), width=h*.1, height=h*.075)
             dpg.add_text("Car Rental System", pos=(h*.11,h*.020))
@@ -102,13 +62,12 @@ def render_login_window():
         dpg.bind_item_font(dpg.last_item(), "title_font")
 
         #new user text             
-        dpg.add_button(tag="new_user", label="New User? Create an Account",  pos=(w*.35, h*.80), width=w*.3, height=h*.075, callback=lambda: dpg.configure_item("modal_id",  parent=loginWin, show=True))
+        dpg.add_button(tag="new_user", label="New User? Create an Account",  pos=(w*.35, h*.80), width=w*.3, height=h*.075, callback=new_user_callback)
         dpg.bind_item_theme(dpg.last_item(), "new_user_button")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
-
+        
     dpg.bind_item_theme(loginWin, "__win_theme")
     dpg.bind_item_theme(topWin, "topWin_theme")
-    dpg.set_item_theme(new_account_win, "__win_theme")
 
     dpg.set_primary_window(loginWin, True)
 
