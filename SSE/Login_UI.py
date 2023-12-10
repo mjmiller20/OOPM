@@ -17,10 +17,6 @@ def login_callback(sender, app_data, user_data):
 def render_login_window():
     global login_window
     global top_window
-    #set theme for text
-    with dpg.theme(tag="text_theme1"):
-        with dpg.theme_component(dpg.mvAll):
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (22, 12, 110))
 
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()

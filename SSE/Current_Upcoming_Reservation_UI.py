@@ -1,13 +1,17 @@
 import dearpygui.dearpygui as dpg
 from reservation_screen import render_new_reservation_window
+from View_Registration import view_registration_window
 
 main_window=""
 top_win=""
 
-     
 '''button functions'''        
 def get_reservation(sender, app_data, user_data):
-    print(user_data)
+    print("reservation "+str(user_data))
+    dpg.delete_item(main_window)
+    dpg.delete_item(top_win)
+    
+    view_registration_window(user_data)
     
 def new_reservation(sender, app_data, user_data):
     print("Creating new reservation")
@@ -51,7 +55,7 @@ def render_reservation_window():
         if(num_reservation>0): 
             with dpg.child_window(border=False, width=w*.7, height=h*.3, pos=(w*.15, h*.3)):
                 for res in range(1,num_reservation+1):
-                    dpg.add_button(label= "Reservation " + str(res) +"    >", pos=(0, ((res-1)*h*.075)), width=w*.75, height=h*.075, callback=get_reservation, user_data="reservation "+str(res))
+                    dpg.add_button(label= "Reservation " + str(res) +"    >", pos=(0, ((res-1)*h*.075)), width=w*.75, height=h*.075, callback=get_reservation, user_data=res)
                     dpg.bind_item_theme(dpg.last_item(), "Reservation_button")
                     dpg.bind_item_font(dpg.last_item(), "Res_font")
 

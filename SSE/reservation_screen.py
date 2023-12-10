@@ -1,9 +1,9 @@
 import dearpygui.dearpygui as dpg
+import Current_Upcoming_Reservation_UI
 
 main_window=""
 top_win=""
 
-#dpg.create_context()
 ##Button Functions
 def get_availability(sender, app_data, user_data):
     num_rentals=5
@@ -25,9 +25,9 @@ def see_availability(sender, app_data, user_data):
 
 def confirm_reservation():
     dpg.delete_item(main_window)
-    #dpg.delete_item(top_win)
+    dpg.delete_item(top_win)
     
-   # render_reservation_window()
+    Current_Upcoming_Reservation_UI.render_reservation_window()
 
 def render_new_reservation_window():
     name="John Doe"
