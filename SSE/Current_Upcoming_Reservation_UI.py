@@ -2,11 +2,9 @@ import dearpygui.dearpygui as dpg
 from reservation_screen import render_new_reservation_window
 from View_Registration import view_registration_window
 
-
 main_window=""
 top_win=""
 
-     
 '''button functions'''        
 def get_reservation(sender, app_data, user_data):
     print("reservation "+str(user_data))

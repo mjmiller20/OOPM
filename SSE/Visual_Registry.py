@@ -42,6 +42,7 @@ def visual_registry(h):
         with dpg.theme_component(dpg.mvAll):
             dpg.add_theme_color(dpg.mvThemeCol_WindowBg, (173, 216, 250))
             dpg.add_theme_color(dpg.mvThemeCol_ChildBg, (173, 216, 250))
+            dpg.add_theme_color(dpg.mvThemeCol_PopupBg, (203, 229, 250))
                 
     with dpg.theme(tag="topWin_theme"):
         with dpg.theme_component(dpg.mvAll):
