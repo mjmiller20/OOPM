@@ -1,11 +1,20 @@
 import dearpygui.dearpygui as dpg
-       
+from reservation_screen import render_new_reservation_window
+
+main_window=""
+top_win=""
+
+     
 '''button functions'''        
 def get_reservation(sender, app_data, user_data):
     print(user_data)
     
 def new_reservation(sender, app_data, user_data):
     print("Creating new reservation")
+    dpg.delete_item(main_window)
+    dpg.delete_item(top_win)
+    
+    render_new_reservation_window()
 
 def profile(sender, app_data, user_data):
     print("loading user profile")
@@ -13,47 +22,9 @@ def profile(sender, app_data, user_data):
 def render_reservation_window():
     num_reservation=5
     name="John Doe"
-
-    '''Themes'''
-    #set theme for current/upcoming reservation buttons
-    with dpg.theme(tag="Reservation_button"):
-        with dpg.theme_component(dpg.mvButton):
-            dpg.add_theme_color(dpg.mvThemeCol_Button, (250,250,250))
-            dpg.add_theme_color(dpg.mvThemeCol_ButtonActive, (250,250,250))
-            dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, (211,211,211))
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (0,0,255))
-            dpg.add_theme_style(dpg.mvStyleVar_ButtonTextAlign, .02, .5)
-
-    with dpg.theme(tag="NewReservation_button"):
-        with dpg.theme_component(dpg.mvButton):
-            dpg.add_theme_color(dpg.mvThemeCol_Button, (208,242,252))
-            dpg.add_theme_color(dpg.mvThemeCol_ButtonActive, (208,242,252))
-            dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, (188,222,242))
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (0,0,255))
-            dpg.add_theme_style(dpg.mvStyleVar_FrameRounding,5)
-
-    with dpg.theme(tag="Text_Button_align_right"):
-        with dpg.theme_component(dpg.mvButton):
-            dpg.add_theme_style(dpg.mvStyleVar_ButtonTextAlign, 1, .5)
-            
-    #set theme for text
-    with dpg.theme(tag="text_theme"):
-        with dpg.theme_component(dpg.mvAll):
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (0,0,255))
-
-    #set theme for window
-    with dpg.theme(tag="__win_theme"):
-        with dpg.theme_component(dpg.mvAll):
-            dpg.add_theme_color(dpg.mvThemeCol_WindowBg, (173, 216, 250))
-            dpg.add_theme_color(dpg.mvThemeCol_ChildBg, (173, 216, 250))
-                
-    with dpg.theme(tag="topWin_theme"):
-        with dpg.theme_component(dpg.mvAll):
-            dpg.add_theme_color(dpg.mvThemeCol_WindowBg, (20, 75, 150))
-            dpg.add_theme_color(dpg.mvThemeCol_Button, (20, 75, 150))
-            dpg.add_theme_color(dpg.mvThemeCol_ButtonActive, (20, 75, 150))
-            dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, (20, 75, 150))
-            dpg.add_theme_color(dpg.mvThemeCol_Text, (255,255,255))
+    
+    global main_window
+    global top_win
 
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()
@@ -99,3 +70,6 @@ def render_reservation_window():
     dpg.bind_item_theme(topWin, "topWin_theme")
 
     dpg.set_primary_window(mainWin, True)
+
+    main_window=mainWin
+    top_win=topWin
