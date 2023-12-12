@@ -1,5 +1,5 @@
 
-import dbaccess
+import SSE.dbaccess as dbaccess
 
 class CarRental:
     db = None

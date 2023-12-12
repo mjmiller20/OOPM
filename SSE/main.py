@@ -1,8 +1,17 @@
 import dearpygui.dearpygui as dpg
+import dbaccess as dbaccess
+from psycopg2 import Error as psycopgError
 from Login_UI import render_login_window
 from Visual_Registry import visual_registry
 
 def main():
+    try:
+        dbaccess.DBAccess()
+
+    except (Exception, psycopgError) as error:
+        print("Error while connecting to PostgreSQL: ", error) 
+        exit()
+
     dpg.create_context()
     dpg.create_viewport(title='Car Rental System Display',x_pos=0, y_pos=0)
     dpg.show_viewport()

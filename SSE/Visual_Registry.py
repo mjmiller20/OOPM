@@ -19,6 +19,10 @@ def visual_registry(h):
     with dpg.theme(tag="text_theme1"):
         with dpg.theme_component(dpg.mvAll):
             dpg.add_theme_color(dpg.mvThemeCol_Text, (22, 12, 110))
+
+    with dpg.theme(tag="text_theme2"):
+        with dpg.theme_component(dpg.mvAll):
+            dpg.add_theme_color(dpg.mvThemeCol_Text, (255, 0, 0))
     
     #input box themes
     with dpg.theme(tag="input_box_theme"):
