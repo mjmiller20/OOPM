@@ -1,24 +1,28 @@
 import psycopg2
 from psycopg2 import Error as psycopgError
 
-class DBAccess:
+class DBAccess():
     conn = None
     cur = None
 
-    def __init__(self):
-        print("Connecting to PostgreSQL")
-        try:
-            self.conn = psycopg2.connect(
-                host="ls-49d6abcc0497d5fab44b0cc9d8a9b96ccb8d378b.coequzq2kddp.us-east-1.rds.amazonaws.com", 
-                database="projdb", 
-                user="projectadmin", 
-                password="FSd0\\\\0*K<PTNEwhg^SUaM6&6",
-                port="5432"
-                )
-            self.cur = self.conn.cursor()
-            print("Connected to PostgreSQL")
-        except (Exception, psycopgError) as error:
-            print("Error while connecting to PostgreSQL:", error)
+    def __new__(self):
+        if not hasattr(self, 'instance'):
+            self.instance = super(DBAccess, self).__new__(self)
+
+            print("Connecting to PostgreSQL")
+            try:
+                self.conn = psycopg2.connect(
+                    host="ls-49d6abcc0497d5fab44b0cc9d8a9b96ccb8d378b.coequzq2kddp.us-east-1.rds.amazonaws.com", 
+                    database="projdb", 
+                    user="projectadmin", 
+                    password="FSd0\\\\0*K<PTNEwhg^SUaM6&6",
+                    port="5432"
+                    )
+                self.cur = self.conn.cursor()
+                print("Connected to PostgreSQL")
+            except (Exception, psycopgError) as error:
+                print("Error while connecting to PostgreSQL:", error)
+        return self.instance
 
     def __del__(self):
         print("Closing PostgreSQL connection")
