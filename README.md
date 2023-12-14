@@ -9,8 +9,27 @@ Erin Cargin, Dylan DeVries, Jarod Miller, Joel Seepersaud
 ### Solution
 Our group's solution involves a custom database and python application.  The application will allow customers to create an account/login to their account with the rental company, create new reservations, and view their current/upcoming reservations.
 
+#### Login Screen
+![Alt text](Images/login_screen.png)
+
 ### Requirements
 Detailed product requirements can be found in the document labeled "RequirementsDoc.docx".
 
 ### Process
 Our team has opted to work in an Agile environment.  Due to scheduling constraints between team members, we have elected to not meet for a daily scrum, but instead meet every 2 weeks for a sprint planning/retrospective meeting.  During this biweekly meeting, the team discusses our individual work during that 2-week sprint, as well as what each member will complete during the next 2-week sprint.  The team also engages in continued online communication through our Discord group channel. 
+
+### Configuration Management
+This github repo serves as our SCM database. All of the software features and documents are created in "feature branches" and linked backed to github issues. Once the features have been independendly tested, a pull request is submitted to our "main" branch. At least two developers are required to review and apporve the changes before it will be merged into the baseline branch. For the officially release of our software, we created a protected CM branch. After the software and documents have gone through our final testing and review phase, the main develop branch was merged into the protected CM branch and tagged as our 1.0.0 release. This CM branch will store all of the official software/document releases where we can see all history and changes.
+
+
+### Installation and Run Instructions
+For this application, python 3 is required along with the following packages: 
+* dearpygui
+* psycopg2
+
+1. To run the application, a user must first clone down our repo.
+2. Then check out our official release tag by typing "git checkout Rental_1.0"
+3. Navigate to the SSE folder
+4. Run the main.py by typing python3 main.py
+5. After doing this the GUI should pop up where the user can create an account and then log in
+
