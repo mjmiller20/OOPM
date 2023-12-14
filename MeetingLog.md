@@ -21,4 +21,5 @@
 - Adding documentation and planning steps to github repo
 
 ## 12/10/2023
-- 
+- Discussion of database progress
+- Review of active issues and pull requests
