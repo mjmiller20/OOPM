@@ -27,9 +27,10 @@ For this application, python 3 is required along with the following packages:
 * dearpygui
 * psycopg2
 
-1. To run the application, a user must first clone down our repo.
-2. Then check out our official release tag by typing "git checkout Rental_1.0"
-3. Navigate to the SSE folder
-4. Run the main.py by typing python3 main.py
-5. After doing this the GUI should pop up where the user can create an account and then log in
-
+1. To run the application, a user must first clone down our repo. In Windows, you can run powershell or command prompt, while in MacOS/Linux, you can run terminal or another terminal emulator. Use "cd" to navigate to where you would like to install the application. Download by typing "git clone https://github.com/mjmiller20/OOPM" 
+2. Run "cd OOPM", then check out our official release tag by typing "git checkout Rental_1.0"
+3. Run "cd SSE" to enter the SSE directory. 
+4. Ensure you have pythom installed by typing "python --version" on Windows or "python3 --version" on Linux or MacOS. If error is output, follwo instructions to download and install Python here https://www.python.org/downloads/
+5. Install dependencies with command "python -m pip install -r requirements.txt" on Windows or "python3 -m pip install -r requirments.txt"
+6. Run the main.py by typing "python3 main.py"
+7. After doing this the GUI should pop up where the user can create an account and then log in

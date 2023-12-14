@@ -1,2 +1,2 @@
-dearpygui==1.10.0
-psycopg2-binary==2.9.9
+dearpygui
+psycopg2-binary
