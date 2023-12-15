@@ -13,10 +13,15 @@ Our group's solution involves a custom database and python application.  The app
 ![Alt text](Images/login_screen.png)
 
 ### Requirements
-Detailed product requirements can be found in the document labeled "RequirementsDoc.docx".
+Detailed product requirements can be found in the document labeled "Documentation/RequirementsSpecification.pdf".
 
 ### Process
 Our team has opted to work in an Agile environment.  Due to scheduling constraints between team members, we have elected to not meet for a daily scrum, but instead meet every 2 weeks for a sprint planning/retrospective meeting.  During this biweekly meeting, the team discusses our individual work during that 2-week sprint, as well as what each member will complete during the next 2-week sprint.  The team also engages in continued online communication through our Discord group channel. 
+
+### Project Timeline
+The project has been split into 5 major milestones.  The Project Introduction milestone encompasses the creation of our project group and brainstorming the problem, solution, and process for the project.  The next four milestones are in the forms of sprints which are reflected in the GitHub issues within this repository.  Sprint one includes the initial requirements document and any model artifacts such as Application, Database, Architecture, and UX diagrams.  Sprint 2 includes most of the development phase, including the database and implementation of UI screens of the application.  Sprint 3 includes the testing and maintenance phase of the application, such as the test plan, risk mitigation plan, and system support plan, as well as the continuous integration of working UIs.  Finally, sprint 4 includes future work or features that the team would like to implement for a final application, but is outside the scope of this project timeline.
+
+The team has elected to use this Gantt chart project timeline planning instead of agile planning.  We have found we work best when delegating the big-picture tasks of each sprint between team members and working on them simultaneously.  This process is reflected in the Gantt chart, as the overall sprint is completed under one timeline, as opposed to each task being tied to a project requirement and having its own timeline.  A full timeline in the form of a Gantt chart can be found under "Documentation/GanttChart.png".  
 
 ### Configuration Management
 This github repo serves as our SCM database. All of the software features and documents are created in "feature branches" and linked backed to github issues. Once the features have been independendly tested, a pull request is submitted to our "main" branch. At least two developers are required to review and apporve the changes before it will be merged into the baseline branch. For the officially release of our software, we created a protected CM branch. After the software and documents have gone through our final testing and review phase, the main develop branch was merged into the protected CM branch and tagged as our 1.0.0 release. This CM branch will store all of the official software/document releases where we can see all history and changes.
