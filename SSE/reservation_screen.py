@@ -1,13 +1,15 @@
 import dearpygui.dearpygui as dpg
 import Current_Upcoming_Reservation_UI
+from Available_Rentals_UI import render_availabilities_window
+import dbaccess as dbaccess
 
 main_window=""
 top_win=""
+ID=""
+
+
 
 ##Button Functions
-def get_availability(sender, app_data, user_data):
-    num_rentals=5
-    print(user_data)
 
 def profile(sender, app_data, user_data):
     print("loading user profile")
@@ -19,9 +21,11 @@ def location(sender, app_data, user_data):
     print(user_data)
 
 def see_availability(sender, app_data, user_data):
-    num_rentals=5
-    dpg.render_dearpygui_frame()    #? Need a way to update gui after something happens
-    print(user_data)
+    print("Checking availabilities...")
+    dpg.delete_item(main_window)
+    dpg.delete_item(top_win)
+    
+    render_availabilities_window(ID)
 
 def confirm_reservation():
     dpg.delete_item(main_window)
@@ -29,12 +33,15 @@ def confirm_reservation():
     
     Current_Upcoming_Reservation_UI.render_reservation_window()
 
-def render_new_reservation_window():
-    name="John Doe"
-    num_rentals=5
-    
+def render_new_reservation_window(Id):
     global main_window
     global top_win
+    global ID
+    ID=Id
+
+    customer=dbaccess.DBAccess().getCustomer(ID)
+    FirstName=customer[0][1]
+    LastName=customer[0][2]
     
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()
@@ -49,23 +56,23 @@ def render_new_reservation_window():
             dpg.bind_item_font(dpg.last_item(), "title_font")
     
             dpg.add_image_button(texture_tag="ProfileLogo", pos=(w*.94,0), width=h*.085, height=h*.075, callback=profile)
-            dpg.add_button(label=name, pos=(w/2, h*.03), width=-h*.080)
+            dpg.add_button(label=str(FirstName) + " " + str(LastName), pos=(w/2, h*.03), width=-h*.080)
             dpg.bind_item_theme(dpg.last_item(), "Text_Button_align_right")
             dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_text("Start Date:", pos=(w*0.05, h*0.15), wrap=w-w*0.32*2)
+        dpg.add_text("Start Date:\n(mm/dd/yyyy)", pos=(w*0.05, h*0.15), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_input_text(label="", default_value="mm/dd/yyyy", pos=(w*0.2, h*0.15), width=w*0.2, height=h*0.1)
+        dpg.add_input_text(label="", default_value="", pos=(w*0.2, h*0.15), width=w*0.2, height=h*0.1)
         dpg.bind_item_theme(dpg.last_item(), "input_box_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_text("End Date:", pos=(w*0.05, h*0.25), wrap=w-w*0.32*2)
+        dpg.add_text("End Date:\n(mm/dd/yyyy)", pos=(w*0.05, h*0.25), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_input_text(label="", default_value="mm/dd/yyyy", pos=(w*0.2, h*0.25), width=w*0.2, height=h*0.1)
+        dpg.add_input_text(label="", default_value="", pos=(w*0.2, h*0.25), width=w*0.2, height=h*0.1)
         dpg.bind_item_theme(dpg.last_item(), "input_box_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
@@ -73,7 +80,7 @@ def render_new_reservation_window():
         dpg.bind_item_theme(dpg.last_item(), "text_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_input_text(label="", default_value="##", pos=(w*0.2, h*0.35), width=w*0.2, height=h*0.1)
+        dpg.add_input_text(label="", default_value="", pos=(w*0.2, h*0.35), width=w*0.2, height=h*0.1)
         dpg.bind_item_theme(dpg.last_item(), "input_box_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
@@ -105,20 +112,8 @@ def render_new_reservation_window():
         dpg.add_button(label="See Availability",pos=(w*0.5, h*0.15), width=w*0.2, height=h*0.1, callback=see_availability)
         dpg.bind_item_theme(dpg.last_item(), "Show_Availability_Button")
         dpg.bind_item_font(dpg.last_item(), "title_font")
-    
-        if(num_rentals>0):
-            with dpg.child_window(border=False, width=w*0.4, height=(h*0.075)*num_rentals, pos=(w*0.5, h*0.3)):
-                for rental in range(1, num_rentals+1):
-                    dpg.add_button(label="Option "+str(rental) + "    >", pos=(0, ((rental-1)*h*.075)), width=w*0.4, height=h*.075, callback=get_availability, user_data="Option "+ str(rental))
-                    dpg.bind_item_theme(dpg.last_item(), "Availability_Button")
-                    dpg.bind_item_font(dpg.last_item(), "Res_font")
-    
-        else:
-            dpg.add_text("No Availabilities.\nPlease adjust your search criteria or contact our office.", pos=(w*0.5, h*0.5), wrap=w-w*0.26*2)
-            dpg.bind_item_theme(dpg.last_item(), "text_theme")
-            dpg.bind_item_font(dpg.last_item(), "Res_font")
 
-#bind window font
+    #bind window font
     dpg.bind_item_theme(mainWin, "__win_theme")
     dpg.bind_item_theme(topWin, "topWin_theme")
 
