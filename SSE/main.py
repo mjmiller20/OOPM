@@ -20,7 +20,7 @@ def main():
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()
     visual_registry(h)
-    
+
     render_login_window()
 
     dpg.setup_dearpygui()

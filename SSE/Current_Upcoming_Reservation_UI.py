@@ -1,9 +1,11 @@
 import dearpygui.dearpygui as dpg
 from reservation_screen import render_new_reservation_window
 from View_Registration import view_registration_window
+import dbaccess as dbaccess
 
 main_window=""
 top_win=""
+ID=""
 
 '''button functions'''        
 def get_reservation(sender, app_data, user_data):
@@ -11,7 +13,7 @@ def get_reservation(sender, app_data, user_data):
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
     
-    view_registration_window(user_data)
+    view_registration_window(user_data, ID)
     
 def new_reservation(sender, app_data, user_data):
     print("Creating new reservation")
@@ -23,13 +25,24 @@ def new_reservation(sender, app_data, user_data):
 def profile(sender, app_data, user_data):
     print("loading user profile")
 
-def render_reservation_window():
-    num_reservation=5
-    name="John Doe"
-    
+#number of reservations
+def getnum_reservation():
+    result=dbaccess.DBAccess().getReservationsByClient(ID)
+    num_reservation=len(result)
+    num_reservation=1
+    return num_reservation
+
+
+def render_reservation_window(Id):
     global main_window
     global top_win
+    global ID
+    ID=Id
 
+    customer=dbaccess.DBAccess().getCustomer(ID)
+    FirstName=customer[0][1]
+    LastName=customer[0][2]
+    
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()
 
@@ -43,7 +56,7 @@ def render_reservation_window():
             dpg.bind_item_font(dpg.last_item(), "title_font")
             
             dpg.add_image_button(texture_tag="ProfileLogo", pos=(w*.94,0), width=h*.085, height=h*.075, callback=profile)
-            dpg.add_button(label=name, pos=(w/2, h*.03), width=-h*.080)
+            dpg.add_button(label=str(FirstName) + " " + str(LastName), pos=(w/2, h*.03), width=-h*.080)
             dpg.bind_item_theme(dpg.last_item(), "Text_Button_align_right")
             dpg.bind_item_font(dpg.last_item(), "Res_font")
         
@@ -52,6 +65,7 @@ def render_reservation_window():
         dpg.bind_item_theme(dpg.last_item(), "text_theme")
         dpg.bind_item_font(dpg.last_item(), "title_font")
         
+        num_reservation = getnum_reservation()
         if(num_reservation>0): 
             with dpg.child_window(border=False, width=w*.7, height=h*.3, pos=(w*.15, h*.3)):
                 for res in range(1,num_reservation+1):
