@@ -29,7 +29,6 @@ def profile(sender, app_data, user_data):
 def getnum_reservation():
     result=dbaccess.DBAccess().getReservationsByClient(ID)
     num_reservation=len(result)
-    num_reservation=1
     return num_reservation
 
 
