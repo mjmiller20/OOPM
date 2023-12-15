@@ -30,7 +30,7 @@ def return_callback(sender, app_data, user_data):
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
     
-    reservation_screen.render_new_reservation_window()
+    reservation_screen.render_new_reservation_window(ID)
 
 
 def render_availabilities_window(Id, search_data):
@@ -70,7 +70,7 @@ def render_availabilities_window(Id, search_data):
 
         else:
             dpg.add_text("No Availabilities.  Please adjust your search criteria and try again.", pos=(w*.40, h*.45), wrap=w-w*.26*2)
-            dpg.add_button(label="Go Back", pos=(0, ((res-1)*h*.075)), width=w*.75, height=h*.075, callback=return_callback)
+            dpg.add_button(label="Go Back", pos=(0, (h*.075)), width=w*.75, height=h*.075, callback=return_callback)
             dpg.bind_item_theme(dpg.last_item(), "text_theme")
             dpg.bind_item_font(dpg.last_item(), "title_font")
 
