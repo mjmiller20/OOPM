@@ -1,2 +1,0 @@
-dearpygui
-psycopg2-binary
