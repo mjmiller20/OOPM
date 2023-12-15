@@ -15,8 +15,14 @@ def profile(sender, app_data, user_data):
     
 
 def book(sender, app_data, user_data):
+    vehicle_info = user_data[0]
+    reservation_info = user_data[1]
+    #reservation_info = [start_date, end_date, num_passengers, model, pickup_location, return_location]
     dpg.show_item("confirmation")
     dpg.configure_item("modal_id2", show=True)
+
+    #def addReservation(self, customerID, vehicleID, pickupLocation, dropoffLocation, timeOfPickup, startDate, endDate, invoiceAmount)
+    dbaccess.addReservation(ID, vehicle_info[0], vehicle_info[9], vehicle_info[9], "8:00", reservation_info[0], reservation_info[1], vehicle_info[6])
 
 def return_reservations_callback(sender, app_data, user_data):
     dpg.delete_item(main_window)
@@ -30,26 +36,26 @@ def return_availabilities_callback(sender, app_data, user_data):
 
     Available_Rentals_UI.render_availabilities_window(ID)
 
-def view_option_window(option_num, Id):
+##vehicle_option = [option number, vehicle, reservation data]
+def view_option_window(vehicle_option, Id):
     global main_window
     global top_win
     global ID
     ID=Id
+
+    option_num = vehicle_option[0]
+    vehicle = vehicle_option[1]
+    reservation_data = vehicle_option[2]
     
     customer=dbaccess.DBAccess().getCustomer(ID)
     FirstName=customer[0][1]
     LastName=customer[0][2]
-    
-    vehicle_option=dbaccess.DBAccess().getVehicle(1)   ## Need a DBAccess() call to get vehicles for given search criteria?
-    #reservation=dbaccess.DBAccess().getReservationsByClient(ID)
-    #reservation=reservation[reservation_num-1]
-    #vehicle=dbaccess.DBAccess().getVehicle(reservation[0][2])
-    
+        
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()
 
     with dpg.window(label="Confirmation", modal=True, show=False, tag="modal_id2", width = w*.4, height = h*.3, no_title_bar=True, pos=(w*.3,300), no_move=True) as confirmationWin:
-        dpg.add_text("Reservation Confirmed!", tag="confirmation", pos=(w*.12, h*.1), show=False) 
+        dpg.add_text("Reservation Confirmed!", tag="confirmation", pos=(w*.05, h*.1), show=False) 
         dpg.bind_item_theme(dpg.last_item(), "text_theme2")
         dpg.bind_item_font(dpg.last_item(), "title_font")
 
@@ -75,35 +81,44 @@ def view_option_window(option_num, Id):
         dpg.add_text("Option "+str(option_num), pos=(w*.1, h*.15))
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "title_font")
-            
-        dpg.add_text("Car Make:", pos=(w*0.1, h*0.45), wrap=w-w*0.32*2)
+
+        dpg.add_text("Car Year:", pos=(w*0.1, h*0.35), wrap=w-w*0.32*2)
+        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
+        dpg.bind_item_font(dpg.last_item(), "Res_font")
+
+        dpg.add_text(str(vehicle[3]), pos=(w*0.25, h*0.35)) ##Year
+        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
+        dpg.bind_item_font(dpg.last_item(), "Res_font")
+
+
+        dpg.add_text("Car Make:", pos=(w*0.1, h*0.45), wrap=w-w*0.32*2) 
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        ##Car Make Text
-        # dpg.add_text(str(vehicle_option[0][1]), pos=(w*0.25, h*0.45))
-        # dpg.bind_item_theme(dpg.last_item(), "text_theme1")
-        # dpg.bind_item_font(dpg.last_item(), "Res_font")
+        dpg.add_text(str(vehicle[1]), pos=(w*0.25, h*0.45)) ##Make
+        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
+        dpg.bind_item_font(dpg.last_item(), "Res_font")
         
+
         dpg.add_text("Car Model:", pos=(w*0.1, h*0.55), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        ##Car Model Text
-        # dpg.add_text(str(vehicle_option[0][2]), pos=(w*0.25, h*0.55))
-        # dpg.bind_item_theme(dpg.last_item(), "text_theme1")
-        # dpg.bind_item_font(dpg.last_item(), "Res_font")
+        dpg.add_text(str(vehicle[2]), pos=(w*0.25, h*0.55)) ##Model
+        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
+        dpg.bind_item_font(dpg.last_item(), "Res_font")
+
 
         dpg.add_text("Price:", pos=(w*0.1, h*0.65), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
 
-        ##Price Text
-        # dpg.add_text(str(vehicle_option[0][3]), pos=(w*0.25, h*0.65))
-        # dpg.bind_item_theme(dpg.last_item(), "text_theme1")
-        # dpg.bind_item_font(dpg.last_item(), "Res_font")
+        dpg.add_text(str(vehicle[6]), pos=(w*0.25, h*0.65)) ##Price
+        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
+        dpg.bind_item_font(dpg.last_item(), "Res_font")
+
             
-        dpg.add_button(label="Book!", pos=(w*.1, h*.75), width=w*.15, height=h*.075, callback=book)
+        dpg.add_button(label="Book!", pos=(w*.1, h*.75), width=w*.15, height=h*.075, callback=book, user_data=[vehicle, reservation_data])
         dpg.bind_item_theme(dpg.last_item(), "Login_button")
         dpg.bind_item_font(dpg.last_item(), "title_font")
 
@@ -118,6 +133,7 @@ def view_option_window(option_num, Id):
     #bind window font
     dpg.bind_item_theme(mainWin, "__win_theme")
     dpg.bind_item_theme(topWin, "topWin_theme")
+    dpg.bind_item_theme(confirmationWin, "__win_theme")
 
     dpg.set_primary_window(mainWin, True)
 

@@ -6,16 +6,22 @@ import reservation_screen
 import dbaccess as dbaccess
 
 def get_option(sender, app_data, user_data):
-    print("reservation "+str(user_data))
+    ##user_data = [option number, vehicle, reservation data]
+    print("option "+str(user_data))
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
-    
-    view_option_window(user_data, ID)
 
-def getnum_options():
-    result=dbaccess.DBAccess().getVehicles()    ##Is this right?
-    num_options=len(result)
-    return num_options
+    view_option_window(user_data, ID)   ##user_data is the vehicle associated with the option the user is selecting
+
+##search_criteria = [start_date, end_date, num_passengers, model, pickup_location, return_location]
+def get_options(search_criteria):
+    ##Note: this only gets vehicles that are currently available.  Future work required to get vehicles that are available for future dates.
+    total_vehicles=dbaccess.DBAccess().getVehicles()
+    available_vehicles = []
+    for vehicle in total_vehicles:
+        if vehicle[8] == True and vehicle[9] == search_criteria[4] and vehicle[7] == search_criteria[3]:
+            available_vehicles.append(vehicle)
+    return available_vehicles
 
 def profile(sender, app_data, user_data):
     print("loading user profile")
@@ -27,7 +33,7 @@ def return_callback(sender, app_data, user_data):
     reservation_screen.render_new_reservation_window()
 
 
-def render_availabilities_window(Id):
+def render_availabilities_window(Id, search_data):
     global main_window
     global top_win
     global ID
@@ -54,11 +60,11 @@ def render_availabilities_window(Id):
             dpg.bind_item_theme(dpg.last_item(), "Text_Button_align_right")
             dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        num_options = getnum_options()
-        if(num_options>0): 
+        options = get_options(search_data)
+        if(len(options)>0): 
             with dpg.child_window(border=False, width=w*.7, height=h*.3, pos=(w*.15, h*.3)):
-                for res in range(1,num_options+1):
-                    dpg.add_button(label= "Option " + str(res) +"    >", pos=(0, ((res-1)*h*.075)), width=w*.75, height=h*.075, callback=get_option, user_data=res)
+                for res in range(1,len(options)+1):
+                    dpg.add_button(label= "Option " + str(res) +"    >", pos=(0, ((res-1)*h*.075)), width=w*.75, height=h*.075, callback=get_option, user_data=[res, options[res-1], search_data])
                     dpg.bind_item_theme(dpg.last_item(), "Reservation_button")
                     dpg.bind_item_font(dpg.last_item(), "Res_font")
 

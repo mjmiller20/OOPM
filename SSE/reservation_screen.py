@@ -25,7 +25,7 @@ def see_availability(sender, app_data, user_data):
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
     
-    render_availabilities_window(ID)
+    render_availabilities_window(ID, user_data)
 
 def confirm_reservation():
     dpg.delete_item(main_window)
@@ -64,52 +64,59 @@ def render_new_reservation_window(Id):
         dpg.bind_item_theme(dpg.last_item(), "text_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_input_text(label="", default_value="", pos=(w*0.2, h*0.15), width=w*0.2, height=h*0.1)
+        dpg.add_input_text(tag="StartDate", default_value="", pos=(w*0.2, h*0.15), width=w*0.2, height=h*0.1)
         dpg.bind_item_theme(dpg.last_item(), "input_box_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
+        start_date = dpg.get_value("StartDate")
     
         dpg.add_text("End Date:\n(mm/dd/yyyy)", pos=(w*0.05, h*0.25), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_input_text(label="", default_value="", pos=(w*0.2, h*0.25), width=w*0.2, height=h*0.1)
+        dpg.add_input_text(tag="EndDate", default_value="", pos=(w*0.2, h*0.25), width=w*0.2, height=h*0.1)
         dpg.bind_item_theme(dpg.last_item(), "input_box_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
+        end_date = dpg.get_value("EndDate")
     
         dpg.add_text("Number of \nPassengers:", pos=(w*0.05, h*0.35), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_input_text(label="", default_value="", pos=(w*0.2, h*0.35), width=w*0.2, height=h*0.1)
+        dpg.add_input_text(tag="NumPassengers", default_value="", pos=(w*0.2, h*0.35), width=w*0.2, height=h*0.1)
         dpg.bind_item_theme(dpg.last_item(), "input_box_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
+        num_passengers = dpg.get_value("NumPassengers")
     
-        dpg.add_text("Car Type\n(Make/Model):", pos=(w*0.05, h*0.45), wrap=w-w*0.32*2)
+        dpg.add_text("Car Type\n(Size Class):", pos=(w*0.05, h*0.45), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_combo(("Choose Model", "Car Model 1", "Car Model 2", "Car Model 3", "Car Model 4"), default_value="Choose Model", callback=make_and_model, pos=(w*0.2, h*0.45), width=w*0.2)
+        dpg.add_combo(("Choose Model", "SUV", "Compact", "Sedan", "Van", "Truck"), tag="CarModel", default_value="Choose Model", pos=(w*0.2, h*0.45), width=w*0.2)
         dpg.bind_item_theme(dpg.last_item(), "dropdown_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
+        model = dpg.get_value("CarModel")
     
         dpg.add_text("Pickup Location:", pos=(w*0.05, h*0.55), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_combo(("Choose Location", "Location 1", "Location 2", "Location 3", "Location 4"), default_value="Choose Location", callback=location, pos=(w*0.2, h*0.55), width=w*0.2)
+        dpg.add_combo(("Choose Location", "Athens", "Alpharetta", "Atlanta", "Augusta", "Macon", "Savannah", "Valdosta"), tag="PickupLocation", default_value="Choose Location", callback=location, pos=(w*0.2, h*0.55), width=w*0.2)
         dpg.bind_item_theme(dpg.last_item(), "dropdown_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
+        pickup_location = dpg.get_value("PickupLocation")
     
         dpg.add_text("Return Location:", pos=(w*0.05, h*0.65), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_combo(("Choose Location", "Location 1", "Location 2", "Location 3", "Location 4"), default_value="Choose Location", callback=location, pos=(w*0.2, h*0.65), width=w*0.2)
+        dpg.add_combo(("Choose Location", "Athens", "Alpharetta", "Atlanta", "Augusta", "Macon", "Savannah", "Valdosta"), tag="ReturnLocation", default_value="Choose Location", callback=location, pos=(w*0.2, h*0.65), width=w*0.2)
         dpg.bind_item_theme(dpg.last_item(), "dropdown_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
+        return_location = dpg.get_value("ReturnLocation")
     
+        search_data = [start_date, end_date, num_passengers, model, pickup_location, return_location]
     
-        dpg.add_button(label="See Availability",pos=(w*0.5, h*0.15), width=w*0.2, height=h*0.1, callback=see_availability)
+        dpg.add_button(label="See Availability",pos=(w*0.5, h*0.15), width=w*0.2, height=h*0.1, callback=see_availability, user_data=search_data)
         dpg.bind_item_theme(dpg.last_item(), "Show_Availability_Button")
         dpg.bind_item_font(dpg.last_item(), "title_font")
 
