@@ -1,8 +1,10 @@
 import dearpygui.dearpygui as dpg
 import Current_Upcoming_Reservation_UI
+import dbaccess as dbaccess
+
 main_window=""
 top_win=""
-
+ID=""
      
 '''button functions'''        
 
@@ -15,12 +17,20 @@ def return_callback(sender, app_data, user_data):
     
     Current_Upcoming_Reservation_UI.render_reservation_window()
 
-def view_registration_window(registration_num):
-    name="John Doe"
-    
+def view_registration_window(reservation_num, Id):
     global main_window
     global top_win
-
+    global ID
+    ID=Id
+    
+    customer=dbaccess.DBAccess().getCustomer(ID)
+    FirstName=customer[0][1]
+    LastName=customer[0][2]
+    
+    reservation=dbaccess.DBAccess().getReservationsByClient(ID)
+    reservation=reservation[reservation_num-1]
+    vehicle=dbaccess.DBAccess().getVehicle(reservation[0][2])
+    
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()
 
@@ -34,12 +44,12 @@ def view_registration_window(registration_num):
             dpg.bind_item_font(dpg.last_item(), "title_font")
             
             dpg.add_image_button(texture_tag="ProfileLogo", pos=(w*.94,0), width=h*.085, height=h*.075, callback=profile)
-            dpg.add_button(label=name, pos=(w/2, h*.03), width=-h*.080)
+            dpg.add_button(label=str(FirstName) + " " + str(LastName), pos=(w/2, h*.03), width=-h*.080)
             dpg.bind_item_theme(dpg.last_item(), "Text_Button_align_right")
             dpg.bind_item_font(dpg.last_item(), "Res_font")
         
         #reservation information text
-        dpg.add_text("Reservation "+str(registration_num), pos=(w*.1, h*.15))
+        dpg.add_text("Reservation "+str(reservation_num), pos=(w*.1, h*.15))
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "title_font")
         
@@ -47,7 +57,7 @@ def view_registration_window(registration_num):
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_text("getStartDate", pos=(w*0.25, h*0.25))
+        dpg.add_text(str(reservation[0][6]), pos=(w*0.25, h*0.25))
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
@@ -55,47 +65,39 @@ def view_registration_window(registration_num):
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_text("getEndDate", pos=(w*0.25, h*0.35))
+        dpg.add_text(str(reservation[0][7]), pos=(w*0.25, h*0.35))
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_text("Number of \nPassengers:", pos=(w*0.1, h*0.45), wrap=w-w*0.32*2)
+        dpg.add_text("Car Make:", pos=(w*0.1, h*0.45), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_text("getNumPassengers", pos=(w*0.25, h*0.45))
+        dpg.add_text(str(vehicle[0][1]), pos=(w*0.25, h*0.45))
+        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
+        dpg.bind_item_font(dpg.last_item(), "Res_font")
+        
+        dpg.add_text("Car Model:", pos=(w*0.1, h*0.55), wrap=w-w*0.32*2)
+        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
+        dpg.bind_item_font(dpg.last_item(), "Res_font")
+        
+        dpg.add_text(str(vehicle[0][2]), pos=(w*0.25, h*0.55))
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_text("Car Make:", pos=(w*0.1, h*0.55), wrap=w-w*0.32*2)
+        dpg.add_text("Pickup Location:", pos=(w*0.1, h*0.65), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_text("getMake", pos=(w*0.25, h*0.55))
+        dpg.add_text(str(reservation[0][3]), pos=(w*0.25, h*0.65))
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_text("Car Model:", pos=(w*0.1, h*0.65), wrap=w-w*0.32*2)
+        dpg.add_text("Return Location:", pos=(w*0.1, h*0.75), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_text("getCarModel", pos=(w*0.25, h*0.65))
-        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
-        dpg.bind_item_font(dpg.last_item(), "Res_font")
-    
-        dpg.add_text("Pickup Location:", pos=(w*0.1, h*0.75), wrap=w-w*0.32*2)
-        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
-        dpg.bind_item_font(dpg.last_item(), "Res_font")
-        
-        dpg.add_text("getPickupLocation", pos=(w*0.25, h*0.75))
-        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
-        dpg.bind_item_font(dpg.last_item(), "Res_font")
-        
-        dpg.add_text("Return Location:", pos=(w*0.1, h*0.85), wrap=w-w*0.32*2)
-        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
-        dpg.bind_item_font(dpg.last_item(), "Res_font")
-        
-        dpg.add_text("getReturnLocation", pos=(w*0.25, h*0.85))
+        dpg.add_text(str(reservation[0][4]), pos=(w*0.25, h*0.75))
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         

@@ -32,14 +32,14 @@ def login_callback(sender, app_data, user_data):
 
         #db call to get info
         result = dbaccess.DBAccess().getCustomerByEmailAndHash(email, str(password_hash))
-
+        
         if(len(result) >= 1):
             dpg.delete_item(login_window)
             dpg.delete_item(top_window)
             dpg.delete_item(invalid_login_win)
             dpg.delete_item(new_account_win)
 
-            render_reservation_window()
+            render_reservation_window(result[0][0])
 
         else:
             resetErrors()
