@@ -22,7 +22,7 @@ def book(sender, app_data, user_data):
     dpg.configure_item("modal_id2", show=True)
 
     #def addReservation(self, customerID, vehicleID, pickupLocation, dropoffLocation, timeOfPickup, startDate, endDate, invoiceAmount)
-    dbaccess.addReservation(ID, vehicle_info[0], vehicle_info[9], vehicle_info[9], "8:00", reservation_info[0], reservation_info[1], vehicle_info[6])
+    dbaccess.DBAccess().addReservation(ID, vehicle_info[0], vehicle_info[9], vehicle_info[9], "8:00", reservation_info[0], reservation_info[1], vehicle_info[6])
 
 def return_reservations_callback(sender, app_data, user_data):
     dpg.delete_item(main_window)
@@ -34,7 +34,7 @@ def return_availabilities_callback(sender, app_data, user_data):
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
 
-    Available_Rentals_UI.render_availabilities_window(ID)
+    Available_Rentals_UI.render_availabilities_window(ID, user_data)
 
 ##vehicle_option = [option number, vehicle, reservation data]
 def view_option_window(vehicle_option, Id):
@@ -126,7 +126,7 @@ def view_option_window(vehicle_option, Id):
         dpg.bind_item_theme(dpg.last_item(), "Login_button")
         dpg.bind_item_font(dpg.last_item(), "title_font")
 
-        dpg.add_button(label="Go Back", pos=(w*.7, h*.75), width=w*.15, height=h*.075, callback=return_availabilities_callback)
+        dpg.add_button(label="Go Back", pos=(w*.7, h*.75), width=w*.15, height=h*.075, callback=return_availabilities_callback, user_data=reservation_data)
         dpg.bind_item_theme(dpg.last_item(), "Login_button")
         dpg.bind_item_font(dpg.last_item(), "title_font")
 
