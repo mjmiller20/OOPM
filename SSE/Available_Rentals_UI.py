@@ -54,11 +54,16 @@ def return_callback(sender, app_data, user_data):
     reservation_screen.render_new_reservation_window(ID)
 
 
-def render_availabilities_window(Id, search_data):
+def render_availabilities_window(Id, option_data):
     global main_window
     global top_win
     global ID
     ID=Id
+
+    option_num = option_data[0]
+    vehicle = option_data[1]
+    reservation_info = option_data[2]
+
 
     customer=dbaccess.DBAccess().getCustomer(ID)
     FirstName=customer[0][1]
@@ -81,11 +86,11 @@ def render_availabilities_window(Id, search_data):
             dpg.bind_item_theme(dpg.last_item(), "Text_Button_align_right")
             dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        options = get_options(search_data)
+        options = get_options(reservation_info)
         if(len(options)>0): 
             with dpg.child_window(border=False, width=w*.7, height=h*.3, pos=(w*.15, h*.3)):
                 for res in range(1,len(options)+1):
-                    dpg.add_button(label= "Option " + str(res) +"    >", pos=(0, ((res-1)*h*.075)), width=w*.75, height=h*.075, callback=get_option, user_data=[res, options[res-1], search_data])
+                    dpg.add_button(label= "Option " + str(res) +"    >", pos=(0, ((res-1)*h*.075)), width=w*.75, height=h*.075, callback=get_option, user_data=[res, options[res-1], reservation_info])
                     dpg.bind_item_theme(dpg.last_item(), "Reservation_button")
                     dpg.bind_item_font(dpg.last_item(), "Res_font")
 

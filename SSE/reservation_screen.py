@@ -35,7 +35,7 @@ def see_availability(sender, app_data, user_data):
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
     
-    render_availabilities_window(ID, search_data)
+    render_availabilities_window(ID, [0, [], search_data])
 
 def confirm_reservation():
     dpg.delete_item(main_window)

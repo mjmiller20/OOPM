@@ -32,6 +32,7 @@ def return_reservations_callback(sender, app_data, user_data):
     Current_Upcoming_Reservation_UI.render_reservation_window(ID)
 
 def return_availabilities_callback(sender, app_data, user_data):
+    #user data = [option number, vehicle, reservation_data]
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
 
@@ -127,7 +128,7 @@ def view_option_window(vehicle_option, Id):
         dpg.bind_item_theme(dpg.last_item(), "Login_button")
         dpg.bind_item_font(dpg.last_item(), "title_font")
 
-        dpg.add_button(label="Options", pos=(w*.7, h*.75), width=w*.15, height=h*.075, callback=return_availabilities_callback, user_data=reservation_data)
+        dpg.add_button(label="Options", pos=(w*.7, h*.75), width=w*.15, height=h*.075, callback=return_availabilities_callback, user_data=[option_num, vehicle, reservation_data])
         dpg.bind_item_theme(dpg.last_item(), "Login_button")
         dpg.bind_item_font(dpg.last_item(), "title_font")
 
