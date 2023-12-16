@@ -20,7 +20,7 @@ def new_reservation(sender, app_data, user_data):
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
     
-    render_new_reservation_window()
+    render_new_reservation_window(ID)
 
 def profile(sender, app_data, user_data):
     print("loading user profile")

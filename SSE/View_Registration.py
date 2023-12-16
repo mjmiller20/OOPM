@@ -15,7 +15,7 @@ def return_callback(sender, app_data, user_data):
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
     
-    Current_Upcoming_Reservation_UI.render_reservation_window()
+    Current_Upcoming_Reservation_UI.render_reservation_window(ID)
 
 def view_registration_window(reservation_num, Id):
     global main_window
@@ -29,7 +29,7 @@ def view_registration_window(reservation_num, Id):
     
     reservation=dbaccess.DBAccess().getReservationsByClient(ID)
     reservation=reservation[reservation_num-1]
-    vehicle=dbaccess.DBAccess().getVehicle(reservation[0][2])
+    vehicle=dbaccess.DBAccess().getVehicle(reservation[2])
     
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()
@@ -57,7 +57,7 @@ def view_registration_window(reservation_num, Id):
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_text(str(reservation[0][6]), pos=(w*0.25, h*0.25))
+        dpg.add_text(str(reservation[6]), pos=(w*0.25, h*0.25))
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
@@ -65,7 +65,7 @@ def view_registration_window(reservation_num, Id):
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_text(str(reservation[0][7]), pos=(w*0.25, h*0.35))
+        dpg.add_text(str(reservation[7]), pos=(w*0.25, h*0.35))
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
@@ -77,31 +77,39 @@ def view_registration_window(reservation_num, Id):
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_text("Car Model:", pos=(w*0.1, h*0.55), wrap=w-w*0.32*2)
+        dpg.add_text("Car Model:", pos=(w*0.5, h*0.45), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_text(str(vehicle[0][2]), pos=(w*0.25, h*0.55))
+        dpg.add_text(str(vehicle[0][2]), pos=(w*0.70, h*0.45))
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_text("Pickup Location:", pos=(w*0.1, h*0.65), wrap=w-w*0.32*2)
+        dpg.add_text("Pickup Location:", pos=(w*0.5, h*0.25), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_text(str(reservation[0][3]), pos=(w*0.25, h*0.65))
+        dpg.add_text(str(reservation[3]), pos=(w*0.70, h*0.25))
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_text("Return Location:", pos=(w*0.1, h*0.75), wrap=w-w*0.32*2)
+        dpg.add_text("Return Location:", pos=(w*0.5, h*0.35), wrap=w-w*0.32*2)
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_text(str(reservation[0][4]), pos=(w*0.25, h*0.75))
+        dpg.add_text(str(reservation[4]), pos=(w*0.70, h*0.35))
         dpg.bind_item_theme(dpg.last_item(), "text_theme1")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
         
-        dpg.add_button(label="Return", pos=(w*.5, h*.75), width=w*.3, height=h*.075, callback=return_callback)
+        dpg.add_text("Invoice Amount:", pos=(w*0.1, h*0.7), wrap=w-w*0.32*2)
+        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
+        dpg.bind_item_font(dpg.last_item(), "Res_font")
+        
+        dpg.add_text("$"+str(reservation[8]), pos=(w*.25, h*0.7))
+        dpg.bind_item_theme(dpg.last_item(), "text_theme1")
+        dpg.bind_item_font(dpg.last_item(), "Res_font")
+        
+        dpg.add_button(label="Return", pos=(w*.35, h*.80), width=w*.3, height=h*.075, callback=return_callback)
         dpg.bind_item_theme(dpg.last_item(), "Login_button")
         dpg.bind_item_font(dpg.last_item(), "title_font")
         
