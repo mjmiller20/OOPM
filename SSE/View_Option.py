@@ -23,6 +23,7 @@ def book(sender, app_data, user_data):
 
     #def addReservation(self, customerID, vehicleID, pickupLocation, dropoffLocation, timeOfPickup, startDate, endDate, invoiceAmount)
     dbaccess.DBAccess().addReservation(ID, vehicle_info[0], vehicle_info[9], vehicle_info[9], "8:00", reservation_info[0], reservation_info[1], vehicle_info[6])
+    dbaccess.DBAccess().updateVehicle(vehicle_info[0], vehicle_info[1], vehicle_info[2], vehicle_info[3], vehicle_info[4], vehicle_info[5], vehicle_info[6], vehicle_info[7], False, vehicle_info[9])
 
 def return_reservations_callback(sender, app_data, user_data):
     dpg.delete_item(main_window)
