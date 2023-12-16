@@ -98,7 +98,7 @@ def render_new_reservation_window(Id):
         dpg.bind_item_theme(dpg.last_item(), "text_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_combo(("Choose Model", "SUV", "Compact", "Sedan", "Van", "Truck"), tag="CarModel", default_value="Choose Model", pos=(w*0.2, h*0.45), width=w*0.2)
+        dpg.add_combo(("Choose Model", "SUV", "Compact", "Luxury", "Sedan", "Van", "Truck"), tag="CarModel", default_value="Choose Model", pos=(w*0.2, h*0.45), width=w*0.2)
         dpg.bind_item_theme(dpg.last_item(), "dropdown_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     

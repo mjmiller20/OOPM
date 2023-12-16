@@ -31,13 +31,16 @@ def get_options(search_criteria):
                 if (vehicle[1] == "Toyota" and vehicle[2] == "Corolla Hatchback") or (vehicle[1] == "Ford" and vehicle[2] == "EcoSport"):
                     available_vehicles.append(vehicle)
             elif search_criteria[3] == "Sedan":
-                if (vehicle[1] == "Toyota" and vehicle[2] == "Camry") or (vehicle[1] == "Ford" and vehicle[2] == "Fiesta"):
+                if (vehicle[1] == "Toyota" and vehicle[2] == "Camry") or (vehicle[1] == "Ford" and vehicle[2] == "Fiesta") or (vehicle[1] == "Toyota" and vehicle[2] == "Camry"):
                     available_vehicles.append(vehicle)
             elif search_criteria[3] == "Van":
                 if (vehicle[1] == "Honda" and vehicle[2] == "Oddyssey") or (vehicle[1] == "Dodge" and vehicle[2] == "Grand Caravan"):
                     available_vehicles.append(vehicle)
             elif search_criteria[3] == "Truck":
-                if (vehicle[1] == "Toyota" and vehicle[2] == "Tundra") or (vehicle[1] == "Ford" and vehicle[2] == "F-150"):
+                if (vehicle[1] == "Toyota" and vehicle[2] == "Tundra") or (vehicle[1] == "Ford" and vehicle[2] == "F-150") or (vehicle[1] == "Toyota" and vehicle[2] == "Tacoma"):
+                    available_vehicles.append(vehicle)
+            elif search_criteria[3] == "Luxury":
+                if (vehicle[1] == "BMW" and vehicle[2] == "M3"):
                     available_vehicles.append(vehicle)
     return available_vehicles
 
