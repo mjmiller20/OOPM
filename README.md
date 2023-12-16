@@ -44,6 +44,6 @@ For this application, python 3 is required along with the following packages:
 1. Upon Startup, Click "New User?  Create a new account", enter your name, username, and password and click "Create Account"
 2. Login with your new username and password.
 3. Note that you will have no reservations, click the "New Reservation" button.
-4. Enter any start and end date, number of passengers.  Due to this being the first iteration of our application, _Car Rental Company_ does not have many vehicles in the database yet.  We recommend entering "trucks" for the car class, and a pickup and return date of "Atlanta, GA".
+4. Enter any start and end date, number of passengers.  Due to this being the first iteration of our application, _Car Rental Company_ does not have many vehicles in the database yet.  We recommend entering "trucks" for the car class, and a pickup and return location of "Atlanta, GA".
 5. Click the "See Availability" button, and look at the options.  Click an option and see the new window with information about the vehicle.
 6. Click the "Book!" button and see the confirmation message about your reservation.  Click on the "Reservations" button to see all of your current reservations, and the "Options" button to go back to the options window and look at other vehicle options.
