@@ -12,6 +12,21 @@ Our group's solution involves a custom database and python application.  The app
 #### Login Screen
 ![Alt text](Images/login_screen.png)
 
+#### New Account Screen
+![Alt text](Images/new_account_screen.png)
+
+#### Upcoming Reservations Screen
+![Alt text](Images/upcoming_reservations_screen.png)
+
+#### View Reservations Screen
+![Alt text](Images/view_reservation_screen.png)
+
+#### New Booking Screen
+![Alt text](Images/new_booking_screen.png)
+
+#### Confirm Booking Screen
+![Alt text](Images/confirm_booking_screen.png)
+
 ### Requirements
 Detailed product requirements can be found in the document labeled "Documentation/RequirementsSpecification.pdf".
 
