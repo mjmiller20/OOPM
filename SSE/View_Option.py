@@ -23,25 +23,26 @@ def book(sender, app_data, user_data):
 
     #def addReservation(self, customerID, vehicleID, pickupLocation, dropoffLocation, timeOfPickup, startDate, endDate, invoiceAmount)
     dbaccess.DBAccess().addReservation(ID, vehicle_info[0], vehicle_info[9], vehicle_info[9], "8:00", reservation_info[0], reservation_info[1], vehicle_info[6])
-    dbaccess.DBAccess().updateVehicle(vehicle_info[0], vehicle_info[1], vehicle_info[2], vehicle_info[3], vehicle_info[4], vehicle_info[5], vehicle_info[6], vehicle_info[7], False, vehicle_info[9])
 
 def return_reservations_callback(sender, app_data, user_data):
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
-
+    dpg.delete_item(confirmation_window)
+    
     Current_Upcoming_Reservation_UI.render_reservation_window(ID)
 
 def return_availabilities_callback(sender, app_data, user_data):
-    #user data = [option number, vehicle, reservation_data]
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
-
+    dpg.delete_item(confirmation_window)
+    
     Available_Rentals_UI.render_availabilities_window(ID, user_data)
 
 ##vehicle_option = [option number, vehicle, reservation data]
 def view_option_window(vehicle_option, Id):
     global main_window
     global top_win
+    global confirmation_window
     global ID
     ID=Id
 
@@ -55,7 +56,7 @@ def view_option_window(vehicle_option, Id):
         
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()
-
+    
     with dpg.window(label="Confirmation", modal=True, show=False, tag="modal_id2", width = w*.4, height = h*.3, no_title_bar=True, pos=(w*.3,300), no_move=True) as confirmationWin:
         dpg.add_text("Reservation Confirmed!", tag="confirmation", pos=(w*.05, h*.1), show=False) 
         dpg.bind_item_theme(dpg.last_item(), "text_theme2")
@@ -128,7 +129,7 @@ def view_option_window(vehicle_option, Id):
         dpg.bind_item_theme(dpg.last_item(), "Login_button")
         dpg.bind_item_font(dpg.last_item(), "title_font")
 
-        dpg.add_button(label="Options", pos=(w*.7, h*.75), width=w*.15, height=h*.075, callback=return_availabilities_callback, user_data=[option_num, vehicle, reservation_data])
+        dpg.add_button(label="Options", pos=(w*.7, h*.75), width=w*.15, height=h*.075, callback=return_availabilities_callback, user_data=reservation_data)
         dpg.bind_item_theme(dpg.last_item(), "Login_button")
         dpg.bind_item_font(dpg.last_item(), "title_font")
 
@@ -141,3 +142,4 @@ def view_option_window(vehicle_option, Id):
 
     main_window=mainWin
     top_win=topWin
+    confirmation_window=confirmationWin

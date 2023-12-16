@@ -35,7 +35,7 @@ def see_availability(sender, app_data, user_data):
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
     
-    render_availabilities_window(ID, [0, [], search_data])
+    render_availabilities_window(ID, search_data)
 
 def confirm_reservation():
     dpg.delete_item(main_window)
@@ -98,7 +98,7 @@ def render_new_reservation_window(Id):
         dpg.bind_item_theme(dpg.last_item(), "text_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        dpg.add_combo(("Choose Model", "SUV", "Compact", "Luxury", "Sedan", "Van", "Truck"), tag="CarModel", default_value="Choose Model", pos=(w*0.2, h*0.45), width=w*0.2)
+        dpg.add_combo(("Choose Model", "SUV", "Compact", "Sedan", "Van", "Truck"), tag="CarModel", default_value="Choose Model", pos=(w*0.2, h*0.45), width=w*0.2)
         dpg.bind_item_theme(dpg.last_item(), "dropdown_theme")
         dpg.bind_item_font(dpg.last_item(), "Res_font")
     

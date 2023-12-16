@@ -10,7 +10,7 @@ def get_option(sender, app_data, user_data):
     print("option "+str(user_data))
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
-
+    
     view_option_window(user_data, ID)   ##user_data is the vehicle associated with the option the user is selecting
 
 ##search_criteria = [start_date, end_date, num_passengers, model, pickup_location, return_location]
@@ -31,16 +31,13 @@ def get_options(search_criteria):
                 if (vehicle[1] == "Toyota" and vehicle[2] == "Corolla Hatchback") or (vehicle[1] == "Ford" and vehicle[2] == "EcoSport"):
                     available_vehicles.append(vehicle)
             elif search_criteria[3] == "Sedan":
-                if (vehicle[1] == "Toyota" and vehicle[2] == "Camry") or (vehicle[1] == "Ford" and vehicle[2] == "Fiesta") or (vehicle[1] == "Toyota" and vehicle[2] == "Camry"):
+                if (vehicle[1] == "Toyota" and vehicle[2] == "Camry") or (vehicle[1] == "Ford" and vehicle[2] == "Fiesta"):
                     available_vehicles.append(vehicle)
             elif search_criteria[3] == "Van":
                 if (vehicle[1] == "Honda" and vehicle[2] == "Oddyssey") or (vehicle[1] == "Dodge" and vehicle[2] == "Grand Caravan"):
                     available_vehicles.append(vehicle)
             elif search_criteria[3] == "Truck":
-                if (vehicle[1] == "Toyota" and vehicle[2] == "Tundra") or (vehicle[1] == "Ford" and vehicle[2] == "F-150") or (vehicle[1] == "Toyota" and vehicle[2] == "Tacoma"):
-                    available_vehicles.append(vehicle)
-            elif search_criteria[3] == "Luxury":
-                if (vehicle[1] == "BMW" and vehicle[2] == "M3"):
+                if (vehicle[1] == "Toyota" and vehicle[2] == "Tundra") or (vehicle[1] == "Ford" and vehicle[2] == "F-150"):
                     available_vehicles.append(vehicle)
     return available_vehicles
 
@@ -54,16 +51,11 @@ def return_callback(sender, app_data, user_data):
     reservation_screen.render_new_reservation_window(ID)
 
 
-def render_availabilities_window(Id, option_data):
+def render_availabilities_window(Id, search_data):
     global main_window
     global top_win
     global ID
     ID=Id
-
-    option_num = option_data[0]
-    vehicle = option_data[1]
-    reservation_info = option_data[2]
-
 
     customer=dbaccess.DBAccess().getCustomer(ID)
     FirstName=customer[0][1]
@@ -86,11 +78,11 @@ def render_availabilities_window(Id, option_data):
             dpg.bind_item_theme(dpg.last_item(), "Text_Button_align_right")
             dpg.bind_item_font(dpg.last_item(), "Res_font")
     
-        options = get_options(reservation_info)
+        options = get_options(search_data)
         if(len(options)>0): 
             with dpg.child_window(border=False, width=w*.7, height=h*.3, pos=(w*.15, h*.3)):
                 for res in range(1,len(options)+1):
-                    dpg.add_button(label= "Option " + str(res) +"    >", pos=(0, ((res-1)*h*.075)), width=w*.75, height=h*.075, callback=get_option, user_data=[res, options[res-1], reservation_info])
+                    dpg.add_button(label= "Option " + str(res) +"    >", pos=(0, ((res-1)*h*.075)), width=w*.75, height=h*.075, callback=get_option, user_data=[res, options[res-1], search_data])
                     dpg.bind_item_theme(dpg.last_item(), "Reservation_button")
                     dpg.bind_item_font(dpg.last_item(), "Res_font")
 
