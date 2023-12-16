@@ -17,7 +17,7 @@ def return_callback(sender, app_data, user_data):
     
     Current_Upcoming_Reservation_UI.render_reservation_window(ID)
 
-def view_registration_window(reservation_num, Id):
+def view_reservation_window(reservation_num, Id):
     global main_window
     global top_win
     global ID
@@ -34,7 +34,7 @@ def view_registration_window(reservation_num, Id):
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()
 
-    #create window that will contain registration buttons
+    #create window that will contain reservation buttons
     with dpg.window(label="Car Rental System", no_close=True, no_collapse=True, no_resize=True, no_move=True) as mainWin:
         
         #create top bar

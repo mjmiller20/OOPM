@@ -1,6 +1,6 @@
 import dearpygui.dearpygui as dpg
 from reservation_screen import render_new_reservation_window
-from View_Registration import view_registration_window
+from View_Reservation import view_reservation_window
 import dbaccess as dbaccess
 
 main_window=""
@@ -13,7 +13,7 @@ def get_reservation(sender, app_data, user_data):
     dpg.delete_item(main_window)
     dpg.delete_item(top_win)
     
-    view_registration_window(user_data, ID)
+    view_reservation_window(user_data, ID)
     
 def new_reservation(sender, app_data, user_data):
     print("Creating new reservation")
@@ -45,7 +45,7 @@ def render_reservation_window(Id):
     w=dpg.get_viewport_width()
     h=dpg.get_viewport_height()
 
-    #create window that will contain registration buttons
+    #create window that will contain reservation buttons
     with dpg.window(label="Car Rental System", no_close=True, no_collapse=True, no_resize=True, no_move=True) as mainWin:
         
         #create top bar
