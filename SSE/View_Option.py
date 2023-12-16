@@ -122,11 +122,11 @@ def view_option_window(vehicle_option, Id):
         dpg.bind_item_theme(dpg.last_item(), "Login_button")
         dpg.bind_item_font(dpg.last_item(), "title_font")
 
-        dpg.add_button(label="Cancel", pos=(w*.4, h*.75), width=w*.15, height=h*.075, callback=return_reservations_callback)
+        dpg.add_button(label="Reservations", pos=(w*.4, h*.75), width=w*.2, height=h*.075, callback=return_reservations_callback)
         dpg.bind_item_theme(dpg.last_item(), "Login_button")
         dpg.bind_item_font(dpg.last_item(), "title_font")
 
-        dpg.add_button(label="Go Back", pos=(w*.7, h*.75), width=w*.15, height=h*.075, callback=return_availabilities_callback, user_data=reservation_data)
+        dpg.add_button(label="Options", pos=(w*.7, h*.75), width=w*.15, height=h*.075, callback=return_availabilities_callback, user_data=reservation_data)
         dpg.bind_item_theme(dpg.last_item(), "Login_button")
         dpg.bind_item_font(dpg.last_item(), "title_font")
 
